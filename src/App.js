@@ -8,9 +8,27 @@ class App extends Component {
 
   };
 
-  handleToggleTodo = (event, todoIdToToggle) => {
-    console.log ('checkbox was clicked')
+  handleDeleteTodo = (event, todoIdToDelete) => {
+ 
+    //copy the state to be modified
 
+    const newTodoList = this.state.todos.filter( todo => {
+      //expecting you to return either true or false
+      if(todo.id ===todoIdToDelete) {
+        return false;
+      }
+      return true;
+    })
+
+    //overwrite the original with copy
+    this.setState({todos: newTodoList});
+   
+
+};
+
+
+  handleToggleTodo = (event, todoIdToToggle) => {
+  
       //creates a copy and modify the copy with map
       const newTodoList = this.state.todos.map(todo => {
         if( todo.id === todoIdToToggle) {
@@ -70,7 +88,10 @@ class App extends Component {
             onKeyDown = {this.handleCreateTodo}
           />
         </header>
-        <TodoList handleToggleTodo = {this.handleToggleTodo} todos={this.state.todos} />
+        <TodoList 
+        handleToggleTodo = {this.handleToggleTodo} 
+        handleDeleteTodo = {this.handleDeleteTodo}
+        todos={this.state.todos} />
         <footer className="footer">
           <span className="todo-count">
             <strong>0</strong> item(s) left
@@ -92,11 +113,10 @@ class TodoItem extends Component {
             className="toggle"
             type="checkbox"
             checked={this.props.completed}
-            onChange = {event => this.props.handleToggleTodo(event, this.props.id)
-            }
+            onChange = {this.props.handleToggleTodo}
           />
           <label>{this.props.title}</label>
-          <button className="destroy" />
+          <button className="destroy" onClick = {this.props.handleDeleteTodo}/>
         </div>
       </li>
     );
@@ -109,8 +129,18 @@ class TodoList extends Component {
       <section className="main">
         <ul className="todo-list">
           {this.props.todos.map(todo => (
-            <TodoItem handleToggleTodo  = {this.props.handleToggleTodo} title={todo.title} completed={todo.completed}
-            id = {todo.id} />
+            <TodoItem 
+            handleToggleTodo  = {event => 
+            this.props.handleToggleTodo (event, todo.id) 
+            }
+
+            handleDeleteTodo = {event => 
+            this.props.handleDeleteTodo (event, todo.id)
+            }
+
+            title={todo.title} 
+            completed={todo.completed}
+            />
           ))}
         </ul>
       </section>
