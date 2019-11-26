@@ -8,13 +8,31 @@ class App extends Component {
 
   };
 
+  handleClearCompletedTodos = event => {
+ 
+    //copy the state to be modified
+
+    const newTodoList = this.state.todos.filter( todo => {
+      //expecting you to return either true or false
+      if(todo.completed === true) {
+        return false;
+      }
+      return true;
+    })
+
+    //overwrite the original with copy
+    this.setState({todos: newTodoList});
+   
+
+};
+
   handleDeleteTodo = (event, todoIdToDelete) => {
  
     //copy the state to be modified
 
     const newTodoList = this.state.todos.filter( todo => {
       //expecting you to return either true or false
-      if(todo.id ===todoIdToDelete) {
+      if(todo.id === todoIdToDelete) {
         return false;
       }
       return true;
@@ -96,7 +114,7 @@ class App extends Component {
           <span className="todo-count">
             <strong>0</strong> item(s) left
           </span>
-          <button className="clear-completed">Clear completed</button>
+          <button onClick = {this.handleClearCompletedTodos} className="clear-completed">Clear completed</button>
         </footer>
       </section>
     );
