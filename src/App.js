@@ -147,7 +147,7 @@ class TodoList extends Component {
       <section className="main">
         <ul className="todo-list">
           {this.props.todos.map(todo => (
-            <TodoItem 
+            <TodoItem key = {todo.id}
             handleToggleTodo  = {event => 
             this.props.handleToggleTodo (event, todo.id) 
             }
