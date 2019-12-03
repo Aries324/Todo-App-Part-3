@@ -9,6 +9,8 @@ class App extends Component {
 
   };
 
+ 
+
   handleClearCompletedTodos = event => {
  
     //copy the state to be modified
@@ -113,7 +115,15 @@ class App extends Component {
         todos={this.state.todos} />
         <footer className="footer">
           <span className="todo-count">
-            <strong>0</strong> item(s) left
+            <strong>{this.state.todos.filter(todo => {
+              if(todo.completed === false) {
+        return true;
+      }
+      return false;
+            }).length
+            }
+            </strong> 
+            item(s) left
           </span>
           <button onClick = {this.handleClearCompletedTodos} className="clear-completed">Clear completed</button>
         </footer>
