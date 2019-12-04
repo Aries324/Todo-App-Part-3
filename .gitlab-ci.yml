@@ -12,4 +12,4 @@ image: node:alpine
   only:
     - master
   variables:
-  PUBLIC_URL: "/assessment---todo-app-part2"
+        PUBLIC_URL: "/assessment---todo-app-part2"
