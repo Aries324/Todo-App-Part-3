@@ -2,14 +2,14 @@ image: node:alpine
 pages:
   stage: deploy
   script:
-  - npm install
-  - npm run build
-  - rm -rf public
-  - mv build public
+    - npm install
+    - npm run build
+    - rm -rf public
+    - mv build public
   artifacts:
     paths:
-    - public
+      - public
   only:
-  - master
+    - master
   variables:
-  PUBLIC_URL: "/assessment---todo-app-part2" 
+  PUBLIC_URL: "/assessment---todo-app-part2"
