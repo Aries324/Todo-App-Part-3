@@ -12,4 +12,4 @@ pages:
   only:
   - master
   variables:
-  PUBLIC_URL: "/assessment---todo-app-part2" # slash is important
+  PUBLIC_URL: "/assessment---todo-app-part2" 
