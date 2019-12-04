@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TodoList from "./TodoList";
 import "./index.css";
 import todosList from "./todos.json";
-import { Route, Link} from 'react-router-dom'
+import { Route, NavLink } from "react-router-dom";
 class App extends Component {
   state = {
     todos: todosList
@@ -91,26 +91,26 @@ class App extends Component {
             onKeyDown={this.handleCreateTodo}
           />
         </header>
-        <Route exact path = "/">
-        <TodoList
-          handleToggleTodo={this.handleToggleTodo}
-          handleDeleteTodo={this.handleDeleteTodo}
-          todos={this.state.todos}
-        />
+        <Route exact path="/">
+          <TodoList
+            handleToggleTodo={this.handleToggleTodo}
+            handleDeleteTodo={this.handleDeleteTodo}
+            todos={this.state.todos}
+          />
         </Route>
-        <Route exact path = "/active">
-        <TodoList
-          handleToggleTodo={this.handleToggleTodo}
-          handleDeleteTodo={this.handleDeleteTodo}
-          todos={this.state.todos.filter(todo => todo.completed === false)}
-        />
+        <Route exact path="/active">
+          <TodoList
+            handleToggleTodo={this.handleToggleTodo}
+            handleDeleteTodo={this.handleDeleteTodo}
+            todos={this.state.todos.filter(todo => todo.completed === false)}
+          />
         </Route>
-        <Route exact path = "/completed">
-        <TodoList
-          handleToggleTodo={this.handleToggleTodo}
-          handleDeleteTodo={this.handleDeleteTodo}
-          todos={this.state.todos.filter(todo =>todo.completed ===true)}
-        />
+        <Route exact path="/completed">
+          <TodoList
+            handleToggleTodo={this.handleToggleTodo}
+            handleDeleteTodo={this.handleDeleteTodo}
+            todos={this.state.todos.filter(todo => todo.completed === true)}
+          />
         </Route>
         <footer className="footer">
           <span className="todo-count">
@@ -124,17 +124,23 @@ class App extends Component {
                 }).length
               }
             </strong>
-             item(s) left
+            item(s) left
           </span>
           <ul className="filters">
             <li>
-              <Link to="/">All</Link>
+              <NavLink exact activeClassName="selected" to="/">
+                All
+              </NavLink>
             </li>
             <li>
-              <Link to="/active">Active</Link>
+              <NavLink exact activeClassName="selected" to="/active">
+                Active
+              </NavLink>
             </li>
             <li>
-              <Link to="/completed">Completed</Link>
+              <NavLink exact activeClassName="selected" to="/completed">
+                Completed
+              </NavLink>
             </li>
           </ul>
           <button
