@@ -3,6 +3,7 @@ import TodoList from "./TodoList";
 import "./index.css";
 import todosList from "./todos.json";
 import { Route, NavLink } from "react-router-dom";
+import { connect} from 'react-redux'
 class App extends Component {
   state = {
     todos: todosList
@@ -154,5 +155,12 @@ class App extends Component {
     );
   }
 }
+//asking connect to read certain values from the redux state
+const mapStateToProps = state => {
+  return{
+    todos: state.todos
+  }
+}
 
-export default App;
+
+export default connect(mapStateToProps)(App); 
