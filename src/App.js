@@ -3,8 +3,8 @@ import TodoList from "./TodoList";
 import "./index.css";
 import todosList from "./todos.json";
 import { Route, NavLink } from "react-router-dom";
-import { connect} from 'react-redux'
-import { addTodo, clearCompletedTodos} from './actions'
+import { connect } from "react-redux";
+import { addTodo, clearCompletedTodos } from "./actions";
 class App extends Component {
   state = {
     todos: todosList
@@ -14,7 +14,6 @@ class App extends Component {
     this.props.clearCompletedTodos();
   };
 
- 
   handleCreateTodo = event => {
     //use public class syntax to permanently bind this to App
 
@@ -37,20 +36,15 @@ class App extends Component {
           />
         </header>
         <Route exact path="/">
-          <TodoList
-          
-            todos={this.props.todos}
-          />
+          <TodoList todos={this.props.todos} />
         </Route>
         <Route exact path="/active">
           <TodoList
-            
             todos={this.props.todos.filter(todo => todo.completed === false)}
           />
         </Route>
         <Route exact path="/completed">
           <TodoList
-            
             todos={this.props.todos.filter(todo => todo.completed === true)}
           />
         </Route>
@@ -98,15 +92,14 @@ class App extends Component {
 }
 //asking connect to read certain values from the redux state
 const mapStateToProps = state => {
-  return{
+  return {
     todos: state.todos
-  }
-}
+  };
+};
 
 const mapDispatchToProps = {
   addTodo,
-  clearCompletedTodos,
-  
-}
+  clearCompletedTodos
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(App); 
+export default connect(mapStateToProps, mapDispatchToProps)(App);
