@@ -23,8 +23,32 @@ const todosReducer = (state = initialState, action) =>{
 
       return { todos: newTodoList };}
 
-        case DELETE_TODO:
-        case TOGGLE_TODO:
+        case DELETE_TODO:{
+             //copy the state to be modified
+
+    const newTodoList = state.todos.filter(todo => {
+        //expecting you to return either true or false
+        if (todo.id === action.payload) {
+          return false;
+        }
+        return true;
+      });
+  
+      //overwrite the original with copy
+      return{ todos: newTodoList };
+        }
+        case TOGGLE_TODO: {
+            const newTodoList = state.todos.map(todo => {
+                if (todo.id === action.payload) {
+                  return { ...todo, completed: !todo.completed };
+                }
+                return todo;
+              });
+          
+              //overwrite the original with the modified copy
+          
+             return { todos: newTodoList };
+        }
         case CLEAR_COMPLETED_TODOS:{
              //copy the state to be modified
 

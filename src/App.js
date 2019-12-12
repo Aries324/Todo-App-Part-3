@@ -14,35 +14,7 @@ class App extends Component {
     this.props.clearCompletedTodos();
   };
 
-  handleDeleteTodo = (event, todoIdToDelete) => {
-    //copy the state to be modified
-
-    const newTodoList = this.state.todos.filter(todo => {
-      //expecting you to return either true or false
-      if (todo.id === todoIdToDelete) {
-        return false;
-      }
-      return true;
-    });
-
-    //overwrite the original with copy
-    this.setState({ todos: newTodoList });
-  };
-
-  handleToggleTodo = (event, todoIdToToggle) => {
-    //creates a copy and modify the copy with map
-    const newTodoList = this.state.todos.map(todo => {
-      if (todo.id === todoIdToToggle) {
-        return { ...todo, completed: !todo.completed };
-      }
-      return todo;
-    });
-
-    //overwrite the original with the modified copy
-
-    this.setState({ todos: newTodoList });
-  };
-
+ 
   handleCreateTodo = event => {
     //use public class syntax to permanently bind this to App
 
@@ -66,22 +38,19 @@ class App extends Component {
         </header>
         <Route exact path="/">
           <TodoList
-            handleToggleTodo={this.handleToggleTodo}
-            handleDeleteTodo={this.handleDeleteTodo}
+          
             todos={this.props.todos}
           />
         </Route>
         <Route exact path="/active">
           <TodoList
-            handleToggleTodo={this.handleToggleTodo}
-            handleDeleteTodo={this.handleDeleteTodo}
+            
             todos={this.props.todos.filter(todo => todo.completed === false)}
           />
         </Route>
         <Route exact path="/completed">
           <TodoList
-            handleToggleTodo={this.handleToggleTodo}
-            handleDeleteTodo={this.handleDeleteTodo}
+            
             todos={this.props.todos.filter(todo => todo.completed === true)}
           />
         </Route>
@@ -136,7 +105,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   addTodo,
-  clearCompletedTodos
+  clearCompletedTodos,
+  
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App); 
