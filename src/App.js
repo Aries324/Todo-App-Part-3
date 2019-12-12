@@ -4,24 +4,14 @@ import "./index.css";
 import todosList from "./todos.json";
 import { Route, NavLink } from "react-router-dom";
 import { connect} from 'react-redux'
+import { addTodo, clearCompletedTodos} from './actions'
 class App extends Component {
   state = {
     todos: todosList
   };
 
   handleClearCompletedTodos = event => {
-    //copy the state to be modified
-
-    const newTodoList = this.state.todos.filter(todo => {
-      //expecting you to return either true or false
-      if (todo.completed === true) {
-        return false;
-      }
-      return true;
-    });
-
-    //overwrite the original with copy
-    this.setState({ todos: newTodoList });
+    this.props.clearCompletedTodos();
   };
 
   handleDeleteTodo = (event, todoIdToDelete) => {
@@ -57,25 +47,7 @@ class App extends Component {
     //use public class syntax to permanently bind this to App
 
     if (event.key === "Enter") {
-      const newTodo = {
-        userId: 1,
-        id: Math.floor(Math.random() * 1000000000),
-        title: event.target.value,
-        completed: false
-      };
-      //immutability pattern--don't modify an existing version of the data
-      //create a copy
-
-      //you can use spread syntax instead of slice
-      //const newTodoList = [...this.state.todos]
-      const newTodoList = this.state.todos.slice();
-      //modify the copy
-      newTodoList.push(newTodo);
-
-      //overwrite the original with the modified copy
-
-      this.setState({ todos: newTodoList });
-
+      this.props.addTodo(event.target.value);
       event.target.value = "";
     }
   };
@@ -96,21 +68,21 @@ class App extends Component {
           <TodoList
             handleToggleTodo={this.handleToggleTodo}
             handleDeleteTodo={this.handleDeleteTodo}
-            todos={this.state.todos}
+            todos={this.props.todos}
           />
         </Route>
         <Route exact path="/active">
           <TodoList
             handleToggleTodo={this.handleToggleTodo}
             handleDeleteTodo={this.handleDeleteTodo}
-            todos={this.state.todos.filter(todo => todo.completed === false)}
+            todos={this.props.todos.filter(todo => todo.completed === false)}
           />
         </Route>
         <Route exact path="/completed">
           <TodoList
             handleToggleTodo={this.handleToggleTodo}
             handleDeleteTodo={this.handleDeleteTodo}
-            todos={this.state.todos.filter(todo => todo.completed === true)}
+            todos={this.props.todos.filter(todo => todo.completed === true)}
           />
         </Route>
         <footer className="footer">
@@ -162,5 +134,9 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = {
+  addTodo,
+  clearCompletedTodos
+}
 
-export default connect(mapStateToProps)(App); 
+export default connect(mapStateToProps, mapDispatchToProps)(App); 
